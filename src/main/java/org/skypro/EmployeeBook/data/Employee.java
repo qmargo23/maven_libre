@@ -8,13 +8,13 @@ import java.util.Objects;
 public class Employee {
     private final String firstName;
     private final String lastName;
-    private final int department;
-    private final double salary;
+    private  int departmentId;
+    private  double salary;
 
-    public Employee(String firstName, String lastName, double salary, int department) {
+    public Employee(String firstName, String lastName, double salary, int departmentId) {
         this.firstName = StringUtils.capitalize(firstName.toLowerCase());
         this.lastName = StringUtils.capitalize(lastName.toLowerCase());
-        this.department = department;
+        this.departmentId = departmentId;
         this.salary = salary;
     }
 
@@ -26,8 +26,8 @@ public class Employee {
         return lastName;
     }
 
-    public int getDepartment() {
-        return department;
+    public int getDepartmentId() {
+        return departmentId;
     }
 
     public double getSalary() {
@@ -37,7 +37,7 @@ public class Employee {
     @Override
     public String toString() {
         return
-                "[" + lastName + ",  " + firstName + ",  " + salary + ",  " + department + "]  ";
+                "[" + lastName + ",  " + firstName + ",  " + salary + ",  " + departmentId + "]  ";
     }
 
     @Override
