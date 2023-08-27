@@ -34,12 +34,17 @@ public class DepartmentService {
                 .min(Comparator.comparing(Employee::getSalary))
                 .orElseThrow(() -> new EmployeeNotFoundException("Сотрудник с минимальной зарплатой не найден"));
     }
-    //localhost:8082/store/departments/all?departmentId=1       вывод по 1 отделу
-    //localhost:8082/store/departments/all                      вывод по всем отделам
-    public Map<Integer, List<Employee>> getEmployeesByDepartment(Integer departmentId) {
+
+
+    public List<Employee> getEmployeesByDepartment(Integer departmentId) {
         return employeeService.getAll().stream()
-                .filter(e -> departmentId == null || e.getDepartmentId() == departmentId)
+                .filter(e -> e.getDepartmentId() == departmentId)
+                .collect(toList());
+    }
+    public Map<Integer, List<Employee>> getAllEmployeesByDepartments() {
+        return employeeService.getAll().stream()
                 .collect(groupingBy(Employee::getDepartmentId, toList()));
     }
+
 
 }

@@ -1,0 +1,23 @@
+{
+  1=[
+  [
+    Ivanov,
+    Ivan,
+    500.0,
+    1
+  ],
+  [
+    Ivanova,
+    Ivana,
+    1000.0,
+    1
+  ],
+  [
+    Iva,
+    Iv,
+    1500.0,
+    1
+  ]
+],
+2=[[Tomson, Tom, 800.0, 2] , [Tomsona, Toma, 1600.0, 2]], 3=[[Remmi, Rem, 900.0, 3] , [Remmin, Rema, 1900.0, 3]]
+}

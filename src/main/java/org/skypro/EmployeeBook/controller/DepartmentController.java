@@ -1,16 +1,14 @@
 package org.skypro.EmployeeBook.controller;
 
-
 import org.skypro.EmployeeBook.data.Employee;
 import org.skypro.EmployeeBook.service.DepartmentService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpStatusCodeException;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
-@RequestMapping("/departments")
+@RequestMapping()
 public class DepartmentController {
 
     @ExceptionHandler({HttpStatusCodeException.class})
@@ -24,21 +22,28 @@ public class DepartmentController {
         this.departmentService = departmentService;
     }
 
-
-    @GetMapping("/max-salary")
-    public String getEmployeeWithMaxSalary(@RequestParam Integer departmentId) {
+    //localhost:8080/department/1/salary/max
+    @GetMapping("/{departmentId}/salary/max")
+    public String getEmployeeWithMaxSalary(@PathVariable Integer departmentId) {
         return "Сотрудник с Max зарплатой в отделе__" + departmentId + " : " + departmentService.getEmployeeWithMaxSalary(departmentId);
     }
 
-    @GetMapping("/min-salary")
-    public String getEmployeeWithMinSalary(@RequestParam Integer departmentId) {
+    //localhost:8080/department/2/salary/min
+    @GetMapping("/{departmentId}/salary/min")
+    public String getEmployeeWithMinSalary(@PathVariable Integer departmentId) {
         return "Сотрудник с Min зарплатой в отделе__" + departmentId + " : " + departmentService.getEmployeeWithMinSalary(departmentId);
     }
 
-    @GetMapping("/all")
-    public String getEmployeesByDepartment(@RequestParam(required = false) Integer departmentId) {
-        return "Вывод списка сотрудников по отделам:  " + departmentService.getEmployeesByDepartment(departmentId);
+    ////localhost:8080/department/1/employees
+    @GetMapping("/{departmentId}/employees")
+    public String getEmployeesByDepartment(@PathVariable Integer departmentId) {
+        return "Вывод списка сотрудников по отделУ:  " + departmentId + " : " + departmentService.getEmployeesByDepartment(departmentId);
     }
-    //localhost:8082/store/departments/all?departmentId=1       вывод по 1 отделу
-    //localhost:8082/store/departments/all                      вывод по всем отделам
+
+    //localhost:8080/department/employees
+    @GetMapping("/employees")
+    public String getAllEmployeesByDepartments() {
+        return "Вывод списка сотрудников по отделАМ:  " + departmentService.getAllEmployeesByDepartments();
+    }
+
 }
