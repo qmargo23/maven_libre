@@ -93,6 +93,7 @@ class DepartmentServiceTest {
         assertTrue(petrFirstDep.getSalary() > ivanFirstDep.getSalary());
         verify(employeeService).getAll();
     }
+
     @Test
     void getEmployeeWithMinSalary_with_EmployeeNotFoundException() {
         //Подготовка входных данных
@@ -149,10 +150,10 @@ class DepartmentServiceTest {
         Employee ivanaFirstDep = getIvanaFirstDep();
 
         when(employeeService.getAll()).thenReturn(
-                List.of(petrFirstDep, ivanFirstDep, ilyaSecondDep,ivanaFirstDep)
+                List.of(petrFirstDep, ivanFirstDep, ilyaSecondDep, ivanaFirstDep)
         );
         Map<Integer, List<Employee>> expectedEmployeeMap = new HashMap<>();
-        expectedEmployeeMap.put(FIRST_DEPARTMENT_ID, List.of(petrFirstDep, ivanFirstDep,ivanaFirstDep));
+        expectedEmployeeMap.put(FIRST_DEPARTMENT_ID, List.of(petrFirstDep, ivanFirstDep, ivanaFirstDep));
         expectedEmployeeMap.put(SECOND_DEPARTMENT_ID, Collections.singletonList(ilyaSecondDep));
 
         //Начало теста
@@ -160,4 +161,25 @@ class DepartmentServiceTest {
         assertEquals(expectedEmployeeMap, actualEmployeeMap);
         verify(employeeService).getAll();
     }
+
+    @Test
+    void shouldReturn_SuccessResult_WithMethod_DepartmentSalarySum() {
+        //Подготовка входных данных
+        int depId = FIRST_DEPARTMENT_ID;
+        //Подготовка ожидаемого результата
+        Double employeeWithDepartmentSalarySum = PETR_SALARY + IVAN_SALARY;
+
+        Employee petrFirstDep = getPetrFirstDep();
+        Employee ivanFirstDep = getIvanFirstDep();
+
+        when(employeeService.getAll()).thenReturn(
+                List.of(petrFirstDep, ivanFirstDep)
+        );
+
+        //Начало теста
+        Double actualEmployeeWithDepartmentSalarySum = departmentService.getEmployeeDepartmentSalarySum(depId);
+        assertEquals(employeeWithDepartmentSalarySum, actualEmployeeWithDepartmentSalarySum);
+        verify(employeeService).getAll();
+    }
+
 }

@@ -19,7 +19,8 @@ public class DepartmentService {
     public DepartmentService(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
-//localhost:8082/store/departments/max-salary?departmentId=1
+
+    //localhost:8082/store/departments/max-salary?departmentId=1
     public Employee getEmployeeWithMaxSalary(Integer departmentId) {
 
         return employeeService.getAll().stream()
@@ -27,6 +28,7 @@ public class DepartmentService {
                 .max(Comparator.comparing(Employee::getSalary))
                 .orElseThrow(() -> new EmployeeNotFoundException("Сотрудник с максимальной зарплатой не найден"));
     }
+
     //localhost:8082/store/departments/min-salary?departmentId=1
     public Employee getEmployeeWithMinSalary(Integer departmentId) {
         return employeeService.getAll().stream()
@@ -35,12 +37,19 @@ public class DepartmentService {
                 .orElseThrow(() -> new EmployeeNotFoundException("Сотрудник с минимальной зарплатой не найден"));
     }
 
+    public Double getEmployeeDepartmentSalarySum(Integer departmentId) {
+    return employeeService.getAll().stream()
+                .filter(employee -> employee.getDepartmentId() == departmentId)
+                .mapToDouble(Employee::getSalary)
+                .sum();
+    }
 
     public List<Employee> getEmployeesByDepartment(Integer departmentId) {
         return employeeService.getAll().stream()
                 .filter(e -> e.getDepartmentId() == departmentId)
                 .collect(toList());
     }
+
     public Map<Integer, List<Employee>> getAllEmployeesByDepartments() {
         return employeeService.getAll().stream()
                 .collect(groupingBy(Employee::getDepartmentId, toList()));
